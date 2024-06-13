@@ -1,4 +1,5 @@
 const User = require("../models/usermodel");
+//const bcrypt = require("bcrypt");
 const bcrypt = require("bcrypt");
 const generateToken = require("../utils/generatetoken");
 
@@ -32,7 +33,7 @@ const getUserProfile = async (req, res) => {
 
 const registerUser = async (req, res) => {
     try {
-        const { username, password, firstName, lastName } = req.body;
+        const { username, password, firstName, lastName, phone } = req.body;
 
         // Check if the necessary fields are present
         if (!username || !password || !firstName || !lastName || !phone) {
