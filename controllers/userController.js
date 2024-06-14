@@ -78,22 +78,27 @@ const loginUser = async (req, res) => {
             return res.status(400).send('Username cannot be found');
         }
 
+        // Log the hashed password and incoming password for debugging
+        console.log("Stored Hashed Password:", user.password);
+        console.log("Incoming Password:", password);
+
         // Compare the hashed password from the db
-        if (user && (await bcrypt.compare(password, user.password))) {
+        const isPasswordMatch = await bcrypt.compare(password, user.password);
+        if (isPasswordMatch) {
             res.json({
                 status: "success",
                 message: "User logged in successfully",
-                userFound,
+                user,
                 token: generateToken(user._id),
-              });
+            });
         } else  {
+            //console.log("Password mismatch");
             return res.status(400).send('invalid login credentials');
         }
 
         // If credentials are correct, send dashboard or success message
         res.send("your dashboard");
         // res.render('dashboard');
-        res.status(200).json({message: "login successful"})
     } catch (error) {
         res.status(500).json({ message: 'An error occurred during login' });
     }
