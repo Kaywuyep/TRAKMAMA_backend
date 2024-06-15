@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 // Import routes
 const trakRouter = require('./routes/trakRoutes');
 const userRouter = require('./routes/userRoutes');
-
+const supportRouter = require('./routes/supportGrp');
 
 // Load environment variables from .env file
 dotenv.config();
@@ -26,6 +26,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Use routes
 app.use('/v1/api/users', userRouter);
-app.use('/api/v1/trakmama/', trakRouter);
+app.use('/v1/api/trakmama', trakRouter);
+app.use('/v1/api/support', supportRouter);
 
 module.exports = app;

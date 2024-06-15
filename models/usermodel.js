@@ -21,13 +21,14 @@ const userSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        trim: true
-        // required: true,
+        trim: true,
+        required: true,
     },
     phone: {
         //type: Number,
         type: String,
-        required: true
+        unique : true
+        //required: true
     },
     password: {
         type: String,
@@ -58,7 +59,7 @@ userSchema.pre("save", async function (next) {
   
     if (!user.isModified("password")) return next();
   
-    this.password = await bcrypt.hash(this.password, 12);
+    this.password = await bcrypt.hash(this.password, 10);
   
     next();
   });

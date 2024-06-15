@@ -24,7 +24,7 @@ const getUserProfile = async (req, res) => {
         if (!userExist) {
             return res.status(400).json({ message: "User does not Exist!!"})
         }
-        const userId = await User.findById(id).populate("Trakmama");;
+        const userId = await User.findById(id).populate(pregnancyTracking);
         res.status(200).json(userId);
     } catch(error) {
         res.status(500).json({message: error.message});   
@@ -33,22 +33,27 @@ const getUserProfile = async (req, res) => {
 
 const registerUser = async (req, res) => {
     try {
-        const { username, password, firstName, lastName, phone } = req.body;
+        const { username, password, firstName, lastName, email } = req.body;
 
         // Check if the necessary fields are present
-        if (!username || !password || !firstName || !lastName || !phone) {
+        if (!username || !password || !firstName || !lastName || !email) {
             return res.status(400).json({ message: "Missing required fields" });
         }
 
         // Check if user already exists
-        const userExist = await User.findOne({ username });
+        const userExist = await User.findOne({ email });
         if (userExist) {
             return res.status(400).json({ message: "User already exists!" });
         }
 
         // Hash password using bcrypt
+        //const saltRounds = 10;
+        //const hashedPassword = await bcrypt.hash(password, saltRounds);
         const saltRounds = 10;
-        const hashedPassword = await bcrypt.hash(password, saltRounds);
+        const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
+        req.body.password = hashedPassword;
+        const userdata = await User.insertMany(req.body);
+        console.log(userdata);
 
         // Create new user object
         const newUser = new User({
@@ -56,7 +61,7 @@ const registerUser = async (req, res) => {
             password: hashedPassword,
             firstName,
             lastName,
-            phone,
+            email,
         });
 
         // Save new user
@@ -74,16 +79,17 @@ const loginUser = async (req, res) => {
 
         // Check if username exists
         const user = await User.findOne({ username });
+        // console.log("Retrieved User:", user);
         if (!user) {
-            return res.status(400).send('Username cannot be found');
+            return res.status(400).json('Username cannot be found');
         }
 
         // Log the hashed password and incoming password for debugging
-        console.log("Stored Hashed Password:", user.password);
-        console.log("Incoming Password:", password);
+        // console.log("Stored Hashed Password:", user.password);
+        // console.log("Incoming Password:", password);
 
         // Compare the hashed password from the db
-        const isPasswordMatch = await bcrypt.compare(password, user.password);
+        const isPasswordMatch = await bcrypt.compare(req.body.password, user.password);
         if (isPasswordMatch) {
             res.json({
                 status: "success",
@@ -93,13 +99,13 @@ const loginUser = async (req, res) => {
             });
         } else  {
             //console.log("Password mismatch");
-            return res.status(400).send('invalid login credentials');
+            return res.status(400).json({ message: 'Password mismatch' });
         }
 
         // If credentials are correct, send dashboard or success message
-        res.send("your dashboard");
         // res.render('dashboard');
     } catch (error) {
+        console.error('An error occurred during login:', error);
         res.status(500).json({ message: 'An error occurred during login' });
     }
 };

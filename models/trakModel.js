@@ -1,15 +1,14 @@
 // schema for tracking pregnancy
 const mongoose = require('mongoose');
-const User = require("./usermodel")
+//const User = require("./usermodel")
 
-const trakSchema = new mongoose.Schema({
+const trakmamaSchema = new mongoose.Schema({
   username: {
-    type: String,
-    ref: User,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
     required: true,
     trim: true,
   },
-
   dueDate: {
     type: Date,
     required: [true, 'Due date is required']
@@ -53,6 +52,6 @@ const trakSchema = new mongoose.Schema({
 
 });
 
-const Trakmama = mongoose.model('Trakmama', trakSchema);
+const Trakmama = mongoose.model('Trakmama', trakmamaSchema);
 
 module.exports = Trakmama;

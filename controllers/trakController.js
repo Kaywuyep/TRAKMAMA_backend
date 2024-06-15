@@ -32,30 +32,41 @@ const getPregnancyTrackingById = async (req, res) => {
 const createPregnancyTracking = async (req, res) => {
     try {
         const id = req.params.id;
-
+        
         //Find the user
-        const user = await User.findById(req.userAuthId);
-        //const Traking = await Trakmama.findById({ _id: id});
+        //const user = await User.findOne({ _id: id });
+        const user = await User.findById({ _id: id});
     
         if (!user) {
             res.status(404).json("user not found");
         }
+
+        // Extract fields from request body
+        const { dueDate, lastMenstrualPeriod, currentWeek, weightGain, symptoms, appointments } = req.body;
+
+        // Validate required fields
+        if (!dueDate || !lastMenstrualPeriod || currentWeek === undefined || weightGain === undefined || !symptoms) {
+            return res.status(400).json({ message: "Missing required fields" });
+        }
     
         const newTraking = await Trakmama.create({
-            user: user,
+            username: user._id,
             dueDate,
             lastMenstrualPeriod,
             currentWeek,
             weightGain,
-            symptoms,
-            appointments,
-            notes
+            symptoms: Array.isArray(symptoms) ? symptoms : symptoms.split(',').map(s => s.trim()),
+            appointments
         });
-    // Save new user
-    await newTraking.save();
-    console.log(newTraking);
 
-    res.status(201).json({ message: "Pregnancy tracking successfully added", user: newTraking });
+        // Add the new tracking entry to the user's pregnancyTracking array
+        user.pregnancyTracking.push(newTraking._id);
+        await user.save();
+        // Save new user
+        // await newTraking.save();
+        console.log(newTraking);
+
+    res.status(201).json({ message: "Pregnancy tracking successfully added", traking: newTraking });
     } catch (error) {
     res.status(500).json({ message: error.message });
     }

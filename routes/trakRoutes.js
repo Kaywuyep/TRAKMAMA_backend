@@ -12,7 +12,7 @@ const {
 
 trakRouter.get("/", isLoggedIn, getPregnancyTracking);
 trakRouter.get("/:id", isLoggedIn, getPregnancyTrackingById);
-trakRouter.post("/create", isLoggedIn, createPregnancyTracking);
+trakRouter.post("/user/:id/newtracking", isLoggedIn, createPregnancyTracking);
 trakRouter.put("/update/:id", isLoggedIn, updatePregnancyTracking);
 
 module.exports = trakRouter;

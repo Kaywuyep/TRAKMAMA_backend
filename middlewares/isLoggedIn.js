@@ -1,18 +1,27 @@
-const { verifyToken } = require("../utils/verifytoken");
+const verifyToken = require("../utils/verifytoken");
 
 const isLoggedIn = (req, res, next) => {
     try {
-        //verify the token
+        // Get the token from the Authorization header
+        const authHeader = req.headers.authorization;
+        if (!authHeader) {
+            return res.status(401).json({ message: "No token provided, authorization denied" });
+        }
+
+        const token = authHeader.split(" ")[1]; // Assumes format is "Bearer token"
+        
+        // Verify the token
         const decodedUser = verifyToken(token);
         if (!decodedUser) {
             throw new Error("Invalid/Expired token, please login again");
-        } else {
-            //save the user into req obj
-            req.userAuthId = decodedUser?.id;
-            next();
         }
+
+        // Save the user ID into req object
+        req.userAuthId = decodedUser._id;
+        next();
     } catch (error) {
-        res.status(500).json({ message: error.message });   
+        res.status(401).json({ message: error.message });
     }
 };
- module.exports = isLoggedIn;
+
+module.exports = isLoggedIn;
