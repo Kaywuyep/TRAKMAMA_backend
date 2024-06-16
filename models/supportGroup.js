@@ -31,7 +31,7 @@ const supportGroupSchema = new mongoose.Schema({
       type: String,
       required: true,
       trim: true,
-      maxlength: [500, 'Post content must be less than or equal to 300 characters']
+      maxlength: [500, 'Post content must be less than or equal to 500 characters']
     },
   }]
 }, { timestamps: true });
