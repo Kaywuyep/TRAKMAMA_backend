@@ -11,7 +11,7 @@ const trakmamaSchema = new mongoose.Schema({
   },
   dueDate: {
     type: Date,
-    required: [true, 'Due date is required']
+    // required: [true, 'Due date is required']
   },
 
   lastMenstrualPeriod: {
@@ -50,6 +50,14 @@ const trakmamaSchema = new mongoose.Schema({
     }
   }],
 
+});
+
+trakmamaSchema.pre('save', function (next) {
+  if (!this.dueDate) {
+    this.dueDate = new Date(this.lastMenstrualPeriod);
+    this.dueDate.setDate(this.dueDate.getDate() + 280); // Adding 280 days to LMP to calculate the due date
+  }
+  next();
 });
 
 const Trakmama = mongoose.model('Trakmama', trakmamaSchema);

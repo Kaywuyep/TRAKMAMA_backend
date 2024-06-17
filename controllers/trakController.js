@@ -42,16 +42,16 @@ const createPregnancyTracking = async (req, res) => {
         }
 
         // Extract fields from request body
-        const { dueDate, lastMenstrualPeriod, currentWeek, weightGain, symptoms, appointments } = req.body;
+        const { lastMenstrualPeriod, currentWeek, weightGain, symptoms, appointments } = req.body;
 
         // Validate required fields
-        if (!dueDate || !lastMenstrualPeriod || currentWeek === undefined || weightGain === undefined || !symptoms) {
+        if (!lastMenstrualPeriod || currentWeek === undefined || weightGain === undefined || !symptoms) {
             return res.status(400).json({ message: "Missing required fields" });
         }
     
         const newTraking = await Trakmama.create({
             username: user._id,
-            dueDate,
+            
             lastMenstrualPeriod,
             currentWeek,
             weightGain,
