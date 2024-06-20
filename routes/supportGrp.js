@@ -13,7 +13,7 @@ const {
 } = require("../controllers/supportGrpCtrl");
 
 
-supportRouter.get('/members', isLoggedIn, getAllUsersInGroup);
+supportRouter.get('/:groupId/members', isLoggedIn, getAllUsersInGroup);
 supportRouter.post('/create', isLoggedIn, createSupportGroup);
 supportRouter.post('/:groupId/users/:id/join', isLoggedIn, joinSupportGroup);
 supportRouter.post('/:groupId/users/:id/post', isLoggedIn, postInSupportGroup);

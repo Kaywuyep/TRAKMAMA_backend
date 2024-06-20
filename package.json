@@ -19,7 +19,7 @@
     "API",
     "NodeJS"
   ],
-  "author": "",
+  "author": "Trakmama Backend Hackathon Group",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.1",

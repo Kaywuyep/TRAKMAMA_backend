@@ -12,9 +12,14 @@ const getAllUsersInGroup = async (req, res) => {
     if (!group) {
       return res.status(404).json({ message: "Support group not found" });
     }
+    // Extract and return the list of members
+    const members = group.members.map(member => ({
+      username: member.username
+    }));
+  
 
     // Return the list of members
-    res.status(200).json({ members: group.members });
+    res.status(200).json({ members });
   } catch (error) {
     // console.error(error);
     res.status(500).json({ message: error.message });
