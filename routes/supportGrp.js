@@ -15,7 +15,7 @@ const {
 
 /**
  * @swagger
- * /api/supportGroup/members:
+ * /api/support/members:
  *   get:
  *     summary: Return a list of users in group
  *     tags: 
@@ -59,7 +59,7 @@ supportRouter.get('/members', isLoggedIn, getAllUsersInGroup);
 
 /**
  * @swagger
- * /api/supportGroup/create:
+ * /api/support/create:
  *   post:
  *     summary: creat a new support group
  *     tags:
@@ -112,7 +112,7 @@ supportRouter.post('/create', isLoggedIn, createSupportGroup);
 
 /**
  * @swagger
- * /api/supportGroup/{groupId}/{id}/join:
+ * /api/support/{groupId}/{id}/join:
  *   post:
  *     summary: joining a support group.
  *     tags:
@@ -161,7 +161,7 @@ supportRouter.post('/:groupId/users/:id/join', isLoggedIn, joinSupportGroup);
 
 /**
  * @swagger
- * /api/supportGroup/{groupId}/{id}/post:
+ * /api/support/{groupId}/{id}/post:
  *   post:
  *     summary: post in support group
  *     tags:
@@ -214,7 +214,7 @@ supportRouter.post('/:groupId/users/:id/post', isLoggedIn, postInSupportGroup);
 
 /** 
 * @swagger
-* /api/supportGroup/{groupId}/users/{id}/remove:
+* /api/support/{groupId}/users/{id}/remove:
 *   delete:
 *     summary: Remove a member by id
 *     tags:
@@ -261,7 +261,7 @@ supportRouter.delete('/:groupId/users/:id/remove', isLoggedIn, isAdmin, removeMe
 
 /** 
 * @swagger
-* /api/supportGroup/{groupId}/delete:
+* /api/support/{groupId}/delete:
 *   delete:
 *     summary: Delete group by id
 *     tags:

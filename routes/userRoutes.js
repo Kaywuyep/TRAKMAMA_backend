@@ -2,7 +2,7 @@ const express = require("express");
 const User = require("../models/usermodel");
 const isLoggedIn = require("../middlewares/isLoggedIn");
 const router = express.Router();
-const swaggerConfig = ('../swagger');
+
 const {
     getUsers,
     getUserProfile,
@@ -86,7 +86,7 @@ router.get("/", getUsers);
  *                              email:
  *                                  type: string
  *                              phone:
- *                                  type: date
+ *                                  type: integer
  *                              password:
  *                                  type: string
  *                              roles:

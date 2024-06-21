@@ -21,24 +21,7 @@ const options ={
     apis: ['./routes/*.js'],
 };
 
-//tags for each routes
-const swaggerConfig = {
-    tags: [
-        {
-            name: 'users',
-            description: 'user management routes' 
-        },
-        {
-            name: 'trakmama',
-            desciption: 'trakmama management route'
-        },
-        {
-            name: 'supportGroup',
-            description: 'supportGroup management rote'
-        }
-    ]
 
-}
 
 
 const swaggerSpec=swaggerJsDoc(options);
@@ -48,6 +31,6 @@ const swaggerSpec=swaggerJsDoc(options);
 
 module.exports = {
     serveMiddleware: swaggerUi.serve,
-    setupMiddleware: swaggerUi.setup(swaggerSpec),
-    swaggerConfig
+    setupMiddleware: swaggerUi.setup(swaggerSpec)
+
 };

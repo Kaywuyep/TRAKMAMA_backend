@@ -7,18 +7,15 @@ const bodyParser = require('body-parser');
 const trakRouter = require('./routes/trakRoutes');
 const userRouter = require('./routes/userRoutes');
 const supportRouter = require('./routes/supportGrp');
-<<<<<<< HEAD
 const swaggerMiddleware = require('./swagger');
 
 
 // Initialize express instance
 const app = express();   
 
-=======
 const trackerRoutes = require('./routes/pregTrackerRoute');
 const libraryRoutes = require('./routes/libraryRoutes');
 const calendarEventRoutes = require('./routes/calendarEventRoutes');
->>>>>>> 5116c5de7925a5d1a927a21605a3817de2affe1d
 
 // Load environment variables from .env file
 dotenv.config();
