@@ -24,7 +24,7 @@ const getUserProfile = async (req, res) => {
         if (!userExist) {
             return res.status(400).json({ message: "User does not Exist!!"})
         }
-        const userId = await User.findById(id).populate(pregnancyTracking);
+        const userId = await User.findById(id).populate('pregnancyTracking');
         res.status(200).json(userId);
     } catch(error) {
         res.status(500).json({message: error.message});   
@@ -129,12 +129,12 @@ const deleteUsers = async (req, res) => {
     try {
         const id = req.params.id;
 
-        const userExist = await Book.findOne({ _id: id });
+        const userExist = await User.findOne({ _id: id });
 
         if (!userExist) {
             return res.status(404).json({ message: "User does not exist!"})
         }
-        const deleteUser = await Book.findByIdAndDelete(id);
+        const deleteUser = await User.findByIdAndDelete(id);
 
         if (!deleteUser) {
             return res.status(404).json({ error: "User not found!"})
