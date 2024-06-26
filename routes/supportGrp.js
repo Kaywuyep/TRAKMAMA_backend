@@ -55,7 +55,7 @@ const {
  *   
  */
 
-supportRouter.get('/members', isLoggedIn, getAllUsersInGroup);
+supportRouter.get('/:groupId/members', isLoggedIn, getAllUsersInGroup);
 
 /**
  * @swagger

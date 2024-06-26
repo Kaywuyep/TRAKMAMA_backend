@@ -6,25 +6,29 @@ const getAllUsersInGroup = async (req, res) => {
   try {
     const { groupId } = req.params;
 
-    // Fetch the support group and populate members
-    const group = await SupportGroup.findById(groupId).populate('members');
+    // Fetch the support group
+    const group = await SupportGroup.findById(groupId);
 
     if (!group) {
       return res.status(404).json({ message: "Support group not found" });
     }
+
+    // Fetch the user details for each member ID in the group
+    const members = await User.find({ _id: { $in: group.members } });
+
     // Extract and return the list of members
-    const members = group.members.map(member => ({
+    const memberDetails = members.map(member => ({
       username: member.username
     }));
-  
 
     // Return the list of members
-    res.status(200).json({ members });
+    res.status(200).json({ members: memberDetails });
   } catch (error) {
-    // console.error(error);
+    console.error(error);
     res.status(500).json({ message: error.message });
   }
 };
+
 
 const createSupportGroup = async (req, res) => {
   try {

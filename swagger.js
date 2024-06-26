@@ -1,10 +1,10 @@
-const express=require('express');
-const swaggerUi=require('swagger-ui-express');
-const swaggerJsDoc=require('swagger-jsdoc');
+const express = require('express');
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsDoc = require('swagger-jsdoc');
 
-const app=express();
+//const app =  express();
 
-const options ={
+const options = {
     definition:{
         openapi: "3.0.0",
         info: {
@@ -14,7 +14,7 @@ const options ={
         },
         servers:[
             {
-                url:"http://localhost:3000/"
+                url:"http://localhost:4000/"
             },
         ],
     },
@@ -25,9 +25,6 @@ const options ={
 
 
 const swaggerSpec=swaggerJsDoc(options);
-
-
-
 
 module.exports = {
     serveMiddleware: swaggerUi.serve,

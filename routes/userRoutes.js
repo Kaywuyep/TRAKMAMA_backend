@@ -100,7 +100,7 @@ router.get("/", getUsers);
  *   
  */
 
-router.get("/:id", getUserProfile);
+router.get("/:id", isLoggedIn, getUserProfile);
 
 /**
  * @swagger

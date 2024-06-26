@@ -55,6 +55,7 @@ const {
  */
 trakRouter.get("/", isLoggedIn, getPregnancyTracking);
 
+
 /**
  * @swagger
  * /api/trakmama/{id}:

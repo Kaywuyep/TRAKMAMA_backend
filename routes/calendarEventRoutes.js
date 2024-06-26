@@ -1,7 +1,7 @@
 const express = require("express");
 // const User = require("../models/usermodel");
 const isLoggedIn = require("../middlewares/isLoggedIn");
-const isAdmin = require("../middlewares/isAdmin")
+// const isAdmin = require("../middlewares/isAdmin")
 const calendarRouter = express.Router();
 const {
     createCalendarEvent,

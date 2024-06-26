@@ -8,7 +8,7 @@ const trakRouter = require('./routes/trakRoutes');
 const userRouter = require('./routes/userRoutes');
 const supportRouter = require('./routes/supportGrp');
 const swaggerMiddleware = require('./swagger');
-
+//const setupSwagger = require('./swagger');
 
 // Initialize express instance
 const app = express();   
@@ -25,7 +25,8 @@ connectDB();
 
 //require swagger
 app.use('/v1/api-docs', swaggerMiddleware.serveMiddleware, swaggerMiddleware.setupMiddleware);
-
+// connect swagger
+//setupSwagger();
 
 // Middleware to parse incoming JSON requests
 app.use(bodyParser.json());
