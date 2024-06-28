@@ -306,4 +306,4 @@ supportRouter.delete('/:groupId/users/:id/remove', isLoggedIn, isAdmin, removeMe
 supportRouter.delete('/:groupId/delete', isLoggedIn, isAdmin, deleteGroupById)
 
 
-module.exports = supportRouter; 
+module.exports = supportRouter;
