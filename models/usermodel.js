@@ -19,26 +19,25 @@ const userSchema = new mongoose.Schema({
         trim: true,
         required: true,
     },
-    //phone: {
-        //type: Number,
-      //  type: String,
-        //unique : true
-        //required: true
-    //},
+    
     password: {
         type: String,
         required: true,
         minlength: 8
     },
     roles: {
-        type: String,
-        default: "user",
-        enum: ["user", "admin"]
+      type: String,
+      default: "user",
+      enum: ["user", "admin"]
     },
     isAdmin: {
-        type: Boolean,
-        default: false,
-      },
+      type: Boolean,
+      default: false,
+    },
+    dueDate: {
+        type: Date,
+        // required: [true, 'Due date is required']
+    },    
     pregnancyTracking: [
         {
           type: mongoose.Schema.Types.ObjectId,
@@ -47,6 +46,7 @@ const userSchema = new mongoose.Schema({
       ],
 
 }, {timestamps : true});
+
 
 
 userSchema.pre("save", async function (next) {
