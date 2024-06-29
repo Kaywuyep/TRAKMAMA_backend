@@ -1,5 +1,6 @@
 // Import express
 const express = require('express');
+const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require("./config/dbConfig");
 const bodyParser = require('body-parser');
@@ -40,6 +41,11 @@ app.use(express.urlencoded({ extended: true }));
 
 // import static files
 // app.use(express.static('public'));
+
+// Use the CORS middleware
+app.use(cors({
+  origin: 'http://localhost:5173', // Allow requests from this origin
+}));
 
 //require swagger
 app.use('/v1/api-docs', swaggerMiddleware.serveMiddleware, swaggerMiddleware.setupMiddleware);
