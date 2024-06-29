@@ -33,10 +33,10 @@ const getUserProfile = async (req, res) => {
 
 const registerUser = async (req, res) => {
     try {
-        const { username, password, firstName, lastName, email } = req.body;
+        const { username, password, email } = req.body;
 
         // Check if the necessary fields are present
-        if (!username || !password || !firstName || !lastName || !email) {
+        if (!username || !password || !email) {
             return res.status(400).json({ message: "Missing required fields" });
         }
 
@@ -59,8 +59,6 @@ const registerUser = async (req, res) => {
         const newUser = new User({
             username,
             password: hashedPassword,
-            firstName,
-            lastName,
             email,
         });
 
