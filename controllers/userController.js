@@ -1,6 +1,6 @@
 const User = require("../models/usermodel");
-//const bcrypt = require("bcrypt");
 const bcrypt = require("bcrypt");
+//const bcrypt = require("bcrypt");
 const generateToken = require("../utils/generatetoken");
 
 
@@ -67,27 +67,35 @@ const registerUser = async (req, res) => {
 
         res.status(201).json({ message: "User successfully added", user: newUser });
     } catch (error) {
+        console.log("error registering new user:", error.message)
         res.status(500).json({ message: error.message });
     }
 };
-
 const loginUser = async (req, res) => {
     try {
-        const { username, password } = req.body;
+        const { email, password } = req.body;
 
         // Check if username exists
-        const user = await User.findOne({ username });
-        // console.log("Retrieved User:", user);
+        const user = await User.findOne({ email });
         if (!user) {
-            return res.status(400).json('Username cannot be found');
+            return res.status(400).json({ message: 'email cannot be found' });
         }
 
-        // Log the hashed password and incoming password for debugging
-        // console.log("Stored Hashed Password:", user.password);
-        // console.log("Incoming Password:", password);
+        // Log retrieved user information for debugging
+        console.log("Retrieved User:", user);
+
+        // Ensure password is provided
+        if (!password) {
+            console.log("Password not provided");
+            return res.status(400).json({ message: 'Password not provided' });
+        }
 
         // Compare the hashed password from the db
-        const isPasswordMatch = await bcrypt.compare(req.body.password, user.password);
+        const isPasswordMatch = await bcrypt.compare(password, user.password);
+        
+        // Log password comparison results for debugging
+        console.log("Password Match Result:", isPasswordMatch);
+
         if (isPasswordMatch) {
             res.json({
                 status: "success",
@@ -95,16 +103,13 @@ const loginUser = async (req, res) => {
                 user,
                 token: generateToken(user._id),
             });
-        } else  {
-            //console.log("Password mismatch");
+        } else {
+            console.log("Password mismatch");
             return res.status(400).json({ message: 'Password mismatch' });
         }
-
-        // If credentials are correct, send dashboard or success message
-        // res.render('dashboard');
     } catch (error) {
-        console.error('An error occurred during login:', error);
-        res.status(500).json({ message: 'An error occurred during login' });
+        console.error('An error occurred during login:', error.message);
+        res.status(500).json({ message: error.message });
     }
 };
 
