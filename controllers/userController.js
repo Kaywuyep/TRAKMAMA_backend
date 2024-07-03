@@ -46,9 +46,6 @@ const registerUser = async (req, res) => {
             return res.status(400).json({ message: "User already exists!" });
         }
 
-        // Hash password using bcrypt
-        //const saltRounds = 10;
-        //const hashedPassword = await bcrypt.hash(password, saltRounds);
         const saltRounds = 10;
         const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
         req.body.password = hashedPassword;
@@ -63,7 +60,7 @@ const registerUser = async (req, res) => {
         });
 
         // Save new user
-        await newUser.save();
+        //await newUser.save();
 
         res.status(201).json({ message: "User successfully added", user: newUser });
     } catch (error) {
