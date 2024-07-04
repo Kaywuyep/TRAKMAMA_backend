@@ -5,6 +5,8 @@ const dotenv = require('dotenv');
 const connectDB = require("./config/dbConfig");
 const bodyParser = require('body-parser');
 const path = require('path');
+
+
 // Import routes
 const trakRouter = require('./routes/trakRoutes');
 const userRouter = require('./routes/userRoutes');
@@ -15,10 +17,12 @@ const swaggerMiddleware = require('./swagger');
 // Initialize express instance
 const app = express();   
 
+
 const trackerRoutes = require('./routes/pregTrackerRoute');
 const libraryRoutes = require('./routes/libraryRoutes');
 const calendarEventRoutes = require('./routes/calendarEventRoutes');
-const chatRoutes = require('./routes/chatbotRoute')
+const chatRoutes = require('./routes/chatbotRoute');
+const payRoutes = require('./routes/paystackRoutes');
 
 // Load environment variables from .env file
 dotenv.config();
@@ -44,7 +48,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Use the CORS middleware
 app.use(cors({
-  origin: 'http://localhost:5173', // Allow requests from this origin
+   origin: '*', // Allow requests from all origin
 }));
 
 //require swagger
@@ -56,7 +60,8 @@ app.use('/v1/api/support', supportRouter);
 app.use('/v1/api/trackers', trackerRoutes);
 app.use('/v1/api/library', libraryRoutes);
 app.use('/v1/api/calendar-events', calendarEventRoutes);
-app.use('/v1/api/chatbot', chatRoutes)
+app.use('/v1/api/chatbot', chatRoutes);
+app.use('/v1/api/payments', payRoutes);
 
 
 
